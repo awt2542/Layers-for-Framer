@@ -14,7 +14,7 @@ More info about modules in Framer and how to install them: [FramerJS Docs - Modu
 
 ## Methods
 
-Each method returns an array with layers:
+Each method on the Layers object returns an array with layers:
 
 .all() - All layers in your project
 
@@ -26,6 +26,11 @@ Each method returns an array with layers:
 
 .withSubLayer(string) - Layers with matching subLayer
 
+The following methods are also added to your layers:
+
+.findSubLayer(string) - Traverse down the tree and return first matching layer
+
+.findSuperLayer(string) - Traverse up the tree and return first matching layer
 
 ## Examples
 
@@ -61,6 +66,11 @@ Each method returns an array with layers:
 ### Find layers inside a dropzone and disable draggable
 	for layer in Layers.withSuperLayer 'dropzone'
 		layer.draggable.enabled = false
+
+### Travel up and down the layer tree 
+	for card in Layers.withName 'card'
+		card.findSubLayer('delete').on Events.Click, ->
+			@findSuperLayer('card').destroy()
 
 
 ##Contact

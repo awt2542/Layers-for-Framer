@@ -23,3 +23,20 @@ module.exports = {
 				matchingLayers.push(layer.superLayer) 
 		return matchingLayers.reverse()
 }
+
+# By https://github.com/facebook/shortcuts-for-framer
+Layer::findSubLayer = (needle, recursive = true) ->
+  # Search direct children
+  for subLayer in @subLayers
+    return subLayer if subLayer.name.toLowerCase().indexOf(needle.toLowerCase()) isnt -1 
+  # Recursively search children of children
+  if recursive
+    for subLayer in @subLayers
+      return subLayer.findSubLayer(needle, recursive) if subLayer.findSubLayer(needle, recursive)
+      
+Layer::findSuperLayer = (needle, recursive = true) ->
+  # Search direct children
+  return @superLayer if @superLayer.name.toLowerCase().indexOf(needle.toLowerCase()) isnt -1 
+  # Recursively search children of children
+  if recursive
+  	return @superLayer.findSuperLayer(needle, recursive) if @superLayer.findSuperLayer(needle, recursive)
