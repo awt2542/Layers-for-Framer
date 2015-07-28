@@ -48,6 +48,9 @@ Each method returns an array with layers:
 	for layer in Layers.withName '_btn_wip'
 		layer.on Events.Click, -> 
 			print "This feature is still work in progress"
+
+	for layer in Layers.withName 'person|animal'
+		layer.opacity = .5
 		
 	layer.visible = false for layer in Layers.withName '_hide'
 
