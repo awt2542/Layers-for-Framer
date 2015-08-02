@@ -18,7 +18,13 @@ Each method on the Layers object returns an array with layers:
 
 .all() - All layers in your project
 
-.withName(string) - Layers with matching name (regex, case-sensitive)
+.withName(string) - Layers with exact name as string
+
+.containing(string) - Layers with name containing string
+
+.startingWith(string) - Layers with name that starts with string
+
+.endingWith(string) - Layers with name that ends with string
 
 .withState(string) - Layers with matching state defined
 
@@ -46,18 +52,18 @@ The following methods are also added to your layers:
 			delay: i/20
 		
 ### Create custom naming schemes with default behaviors
-	for layer in Layers.withName '_drag'
+	for layer in Layers.endingWith '_drag'
 		layer.draggable.enabled = true 
 		layer.draggable.speedX = 0
 
-	for layer in Layers.withName '_btn_wip'
+	for layer in Layers.endingWith '_btn_wip'
 		layer.on Events.Click, -> 
 			print "This feature is still work in progress"
 
-	for layer in Layers.withName 'person|animal'
+	for layer in Layers.containing 'person|animal'
 		layer.opacity = .5
 		
-	layer.visible = false for layer in Layers.withName '_hide'
+	layer.visible = false for layer in Layers.endingWith '_hide'
 
 ### Switch to the "popup" state on layers where it has been defined
 	for layer in Layers.withState 'popup'
@@ -68,7 +74,7 @@ The following methods are also added to your layers:
 		layer.draggable.enabled = false
 
 ### Travel up and down the layer tree 
-	for card in Layers.withName 'card'
+	for card in Layers.startingWith 'card'
 		card.findSubLayer('delete').on Events.Click, ->
 			@findSuperLayer('card').destroy()
 

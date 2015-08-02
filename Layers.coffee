@@ -3,7 +3,22 @@ module.exports = {
 	withName: (name) ->
 		matchingLayers = []
 		for layer in Framer.CurrentContext.getLayers()
+ 			matchingLayers.push(layer) if layer.name is name
+ 		return matchingLayers.reverse() # to match layerlist order
+	containing: (name) ->
+		matchingLayers = []
+		for layer in Framer.CurrentContext.getLayers()
  			matchingLayers.push(layer) if layer.name.match(name)
+ 		return matchingLayers.reverse() # to match layerlist order
+	startingWith: (name) ->
+		matchingLayers = []
+		for layer in Framer.CurrentContext.getLayers()
+ 			matchingLayers.push(layer) if layer.name.match("^#{name}")
+ 		return matchingLayers.reverse() # to match layerlist order
+	endingWith: (name) ->
+		matchingLayers = []
+		for layer in Framer.CurrentContext.getLayers()
+ 			matchingLayers.push(layer) if layer.name.match("#{name}$")
  		return matchingLayers.reverse() # to match layerlist order
 	withState: (state) -> # use regex, instead?
 		matchingLayers = []
