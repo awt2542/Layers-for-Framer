@@ -26,6 +26,12 @@ module.exports = {
 			layerStates = layer.states._orderedStates
 			matchingLayers.push(layer) if layerStates.indexOf(state) isnt -1
 		return matchingLayers.reverse()
+	withCurrentState: (state) -> 
+		matchingLayers = []
+		for layer in Framer.CurrentContext.getLayers()
+			currentState = layer.states.current
+			matchingLayers.push(layer) if currentState.indexOf(state) isnt -1
+		return matchingLayers.reverse()
 	withSuperLayer: (name) ->
 		matchingLayers = []
 		for layer in @withName(name)
