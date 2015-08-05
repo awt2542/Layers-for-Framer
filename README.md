@@ -28,6 +28,8 @@ Each method on the Layers object returns an array with layers:
 
 .withState(string) - Layers with matching state defined
 
+.withCurrentState(string) - Layers with match state currently active
+
 .withSuperLayer(string) - Layers with matching superLayer
 
 .withSubLayer(string) - Layers with matching subLayer
