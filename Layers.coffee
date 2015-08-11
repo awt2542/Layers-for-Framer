@@ -2,33 +2,33 @@ module.exports = {
 	all: -> Framer.CurrentContext.getLayers()
 	withName: (name) ->
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
  			matchingLayers.push(layer) if layer.name is name
  		return matchingLayers.reverse() # to match layerlist order
 	containing: (name) ->
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
  			matchingLayers.push(layer) if layer.name.match(name)
  		return matchingLayers.reverse() # to match layerlist order
 	startingWith: (name) ->
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
  			matchingLayers.push(layer) if layer.name.match("^#{name}")
  		return matchingLayers.reverse() # to match layerlist order
 	endingWith: (name) ->
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
  			matchingLayers.push(layer) if layer.name.match("#{name}$")
  		return matchingLayers.reverse() # to match layerlist order
 	withState: (state) -> # use regex, instead?
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
 			layerStates = layer.states._orderedStates
 			matchingLayers.push(layer) if layerStates.indexOf(state) isnt -1
 		return matchingLayers.reverse()
 	withCurrentState: (state) -> 
 		matchingLayers = []
-		for layer in Framer.CurrentContext.getLayers()
+		for layer in @all()
 			currentState = layer.states.current
 			matchingLayers.push(layer) if currentState.indexOf(state) isnt -1
 		return matchingLayers.reverse()
@@ -43,6 +43,8 @@ module.exports = {
 			if matchingLayers.indexOf(layer.superLayer) is -1
 				matchingLayers.push(layer.superLayer) 
 		return matchingLayers.reverse()
+	where: (obj) ->
+		_.where Framer.CurrentContext.getLayers(), obj
 }
 
 # By https://github.com/facebook/shortcuts-for-framer

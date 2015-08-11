@@ -34,6 +34,8 @@ Each method on the Layers object returns an array with layers:
 
 .withSubLayer(string) - Layers with matching subLayer
 
+.where(obj) - Layers matching properties and values
+
 The following methods are also added to your layers:
 
 .findSubLayer(string) - Traverse down the tree and return first matching layer
@@ -79,6 +81,9 @@ The following methods are also added to your layers:
 	for card in Layers.startingWith 'card'
 		card.findSubLayer('delete').on Events.Click, ->
 			@findSuperLayer('card').destroy()
+
+### Find layers by their current values
+	layer.opacity = 0.2 for layer in Layers.where opacity: 1
 
 
 ##Contact
