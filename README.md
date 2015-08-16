@@ -20,6 +20,8 @@ Each method on the Layers object returns an array with layers:
 
 .withName(string) - Layers with exact name as string
 
+.get(string) - Same as .withName, but returns the first match
+
 .containing(string) - Layers with name containing string
 
 .startingWith(string) - Layers with name that starts with string

@@ -45,6 +45,8 @@ module.exports = {
 		return matchingLayers.reverse()
 	where: (obj) ->
 		_.where Framer.CurrentContext.getLayers(), obj
+	get: (name) ->
+		@withName(name)[0]
 }
 
 # By https://github.com/facebook/shortcuts-for-framer
