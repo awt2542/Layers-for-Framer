@@ -8,19 +8,19 @@ module.exports = {
 	containing: (name) ->
 		matchingLayers = []
 		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.match(name)
+ 			matchingLayers.push(layer) if layer.name.indexOf(name) isnt -1
  		return matchingLayers.reverse() # to match layerlist order
 	startingWith: (name) ->
 		matchingLayers = []
 		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.match("^#{name}")
+ 			matchingLayers.push(layer) if layer.name.substring(0,name.length) is name
  		return matchingLayers.reverse() # to match layerlist order
 	endingWith: (name) ->
 		matchingLayers = []
 		for layer in @all()
  			matchingLayers.push(layer) if layer.name.match("#{name}$")
  		return matchingLayers.reverse() # to match layerlist order
-	withState: (state) -> # use regex, instead?
+	withState: (state) -> 
 		matchingLayers = []
 		for layer in @all()
 			layerStates = layer.states._orderedStates
@@ -48,6 +48,11 @@ module.exports = {
 	get: (name) ->
 		@withName(name)[0]
 }
+
+Layer::prefixSwitch = (newPrefix, delimiter = '_') ->
+	name = this.name
+	newName = newPrefix + name.slice name.indexOf delimiter
+	return module.exports.get newName
 
 # By https://github.com/facebook/shortcuts-for-framer
 Layer::findSubLayer = (needle, recursive = true) ->
