@@ -5,6 +5,23 @@ module.exports = {
 		for layer in @all()
  			matchingLayers.push(layer) if layer.name is name
  		return matchingLayers.reverse() # to match layerlist order
+ 	withWord: (name) ->
+		matchingLayers = []
+		both = '_'+name+'_'
+		end = name+'_'
+		start = '_'+name
+		
+		for layer in @containing name
+			if layer.name.indexOf(both) isnt -1
+				if matchingLayers.indexOf layer is -1
+					matchingLayers.push layer
+			else if layer.name.indexOf(end) isnt -1
+				if matchingLayers.indexOf layer is -1
+					matchingLayers.push layer
+			else if layer.name.indexOf(start) isnt -1
+				if matchingLayers.indexOf layer is -1
+					matchingLayers.push layer
+		matchingLayers
 	containing: (name) ->
 		matchingLayers = []
 		for layer in @all()
@@ -49,7 +66,7 @@ module.exports = {
 		@withName(name)[0]
 }
 
-Layer::prefixSwitch = (newPrefix, delimiter = '_') ->
+Layer::switchPrefix = (newPrefix, delimiter = '_') ->
 	name = this.name
 	newName = newPrefix + name.slice name.indexOf delimiter
 	return module.exports.get newName
