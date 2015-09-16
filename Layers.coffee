@@ -5,14 +5,22 @@ module.exports = {
 		for layer in @all()
  			matchingLayers.push(layer) if layer.name is name
  		return matchingLayers.reverse() # to match layerlist order
- 	withWord: (name) ->
+	containing: (name) ->
+		matchingLayers = []
+		for layer in @all()
+ 			matchingLayers.push(layer) if layer.name.indexOf(name) isnt -1
+ 		return matchingLayers.reverse() # to match layerlist order
+	withWord: (name) ->
 		matchingLayers = []
 		both = '_'+name+'_'
 		end = name+'_'
 		start = '_'+name
 		
 		for layer in @containing name
-			if layer.name.indexOf(both) isnt -1
+			if layer.name is name
+				if matchingLayers.indexOf layer is -1
+					matchingLayers.push layer
+			else if layer.name.indexOf(both) isnt -1
 				if matchingLayers.indexOf layer is -1
 					matchingLayers.push layer
 			else if layer.name.indexOf(end) isnt -1
@@ -21,12 +29,7 @@ module.exports = {
 			else if layer.name.indexOf(start) isnt -1
 				if matchingLayers.indexOf layer is -1
 					matchingLayers.push layer
-		matchingLayers
-	containing: (name) ->
-		matchingLayers = []
-		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.indexOf(name) isnt -1
- 		return matchingLayers.reverse() # to match layerlist order
+		return matchingLayers
 	startingWith: (name) ->
 		matchingLayers = []
 		for layer in @all()
@@ -64,6 +67,7 @@ module.exports = {
 		_.where Framer.CurrentContext.getLayers(), obj
 	get: (name) ->
 		@withName(name)[0]
+
 }
 
 Layer::switchPrefix = (newPrefix, delimiter = '_') ->
@@ -80,6 +84,8 @@ Layer::findSubLayer = (needle, recursive = true) ->
   if recursive
     for subLayer in @subLayers
       return subLayer.findSubLayer(needle, recursive) if subLayer.findSubLayer(needle, recursive)
+      
+Layer::find = (needle, recursive = true ) -> @findSubLayer needle, recursive = true
       
 Layer::findSuperLayer = (needle, recursive = true) ->
   # Search direct children
