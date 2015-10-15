@@ -38,7 +38,7 @@ module.exports = {
 	endingWith: (name) ->
 		matchingLayers = []
 		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.match("#{name}$")
+ 			matchingLayers.push(layer) if layer.name.indexOf(name, layer.name.length - name.length) isnt -1
  		return matchingLayers.reverse() # to match layerlist order
 	withState: (state) -> 
 		matchingLayers = []
