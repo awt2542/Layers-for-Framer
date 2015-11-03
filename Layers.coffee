@@ -1,15 +1,14 @@
 module.exports = {
 	all: -> Framer.CurrentContext.getLayers()
+
 	withName: (name) ->
-		matchingLayers = []
-		for layer in @all()
- 			matchingLayers.push(layer) if layer.name is name
- 		return matchingLayers.reverse() # to match layerlist order
+ 		matchingLayers = _.filter @all(), (layer) -> 
+ 			layer if layer.name is name
+
 	containing: (name) ->
-		matchingLayers = []
-		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.indexOf(name) isnt -1
- 		return matchingLayers.reverse() # to match layerlist order
+		matchingLayers = _.filter @all(), (layer) -> 
+			layer if layer.name.indexOf(name) isnt -1
+
 	withWord: (name) ->
 		matchingLayers = []
 		both = '_'+name+'_'
@@ -30,44 +29,43 @@ module.exports = {
 				if matchingLayers.indexOf layer is -1
 					matchingLayers.push layer
 		return matchingLayers
+		
 	startingWith: (name) ->
-		matchingLayers = []
-		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.substring(0,name.length) is name
- 		return matchingLayers.reverse() # to match layerlist order
+		matchingLayers = _.filter @all(), (layer) -> 
+			layer if layer.name.substring(0,name.length) is name
+
 	endingWith: (name) ->
-		matchingLayers = []
-		for layer in @all()
- 			matchingLayers.push(layer) if layer.name.indexOf(name, layer.name.length - name.length) isnt -1
- 		return matchingLayers.reverse() # to match layerlist order
+		matchingLayers = _.filter @all(), (layer) -> 
+			layer if layer.name.indexOf(name, layer.name.length - name.length) isnt -1
+
 	withState: (state) -> 
-		matchingLayers = []
-		for layer in @all()
+		matchingLayers = _.filter @all(), (layer) ->
 			layerStates = layer.states._orderedStates
-			matchingLayers.push(layer) if layerStates.indexOf(state) isnt -1
-		return matchingLayers.reverse()
+			layer if layerStates.indexOf(state) isnt -1
+
 	withCurrentState: (state) -> 
-		matchingLayers = []
-		for layer in @all()
+		matchingLayers = _.filter @all(), (layer) ->
 			currentState = layer.states.current
-			matchingLayers.push(layer) if currentState.indexOf(state) isnt -1
-		return matchingLayers.reverse()
+			layer if currentState.indexOf(state) isnt -1
+
 	withSuperLayer: (name) ->
 		matchingLayers = []
 		for layer in @withName(name)
 			matchingLayers = matchingLayers.concat(layer.subLayers)
 		return matchingLayers.reverse()
+
 	withSubLayer: (name) ->
 		matchingLayers = []
 		for layer in @withName(name)
 			if matchingLayers.indexOf(layer.superLayer) is -1
 				matchingLayers.push(layer.superLayer) 
 		return matchingLayers.reverse()
+
 	where: (obj) ->
 		_.where Framer.CurrentContext.getLayers(), obj
+
 	get: (name) ->
 		@withName(name)[0]
-
 }
 
 Layer::switchPrefix = (newPrefix, delimiter = '_') ->
