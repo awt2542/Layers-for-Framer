@@ -1,7 +1,7 @@
 # Layers for Framer.js
 
-Proof-of-concept-module that makes it easier to find and target layers in Framer.js. Find all layers in your project, target layers that shares the same name, create custom naming schemes for default behaviors, find layers with a certain state defined and more.
-Some methods require the .name property to be set (automatically set if you import from PS/Sketch).
+Inspired by jQuery's selectors, this module makes it easier to find and target layers in Framer.js. Find all layers in your project, target layers that shares the same name, create custom naming schemes for default behaviors, find layers with a certain state defined and more.
+Some methods require the .name property to be set (automatically done if you import from PS/Sketch).
 
 ## Installation
 
