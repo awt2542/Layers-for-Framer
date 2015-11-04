@@ -1,65 +1,54 @@
 module.exports = {
+
 	all: -> Framer.CurrentContext.getLayers()
 
 	withName: (name) ->
- 		matchingLayers = _.filter @all(), (layer) -> 
- 			layer if layer.name is name
+ 		_.filter @all(), (layer) -> 
+ 			if layer.name is name then true
 
 	containing: (name) ->
-		matchingLayers = _.filter @all(), (layer) -> 
-			layer if layer.name.indexOf(name) isnt -1
+		_.filter @all(), (layer) -> 
+			if layer.name.indexOf(name) isnt -1 then true
 
-	withWord: (name) ->
-		matchingLayers = []
-		both = '_'+name+'_'
-		end = name+'_'
-		start = '_'+name
-		
-		for layer in @containing name
-			if layer.name is name
-				if matchingLayers.indexOf layer is -1
-					matchingLayers.push layer
-			else if layer.name.indexOf(both) isnt -1
-				if matchingLayers.indexOf layer is -1
-					matchingLayers.push layer
-			else if layer.name.indexOf(end) isnt -1
-				if matchingLayers.indexOf layer is -1
-					matchingLayers.push layer
-			else if layer.name.indexOf(start) isnt -1
-				if matchingLayers.indexOf layer is -1
-					matchingLayers.push layer
-		return matchingLayers
+	withWord: (name, delimiter = '_') ->
+		both = delimiter+name+delimiter
+		end = name+delimiter
+		start = delimiter+name
+
+		_.filter @containing(name), (layer) ->
+			if layer.name is name then true
+			else if layer.name.indexOf(both) isnt -1 then true
+			else if layer.name.indexOf(end) is 0 then true
+			else if layer.name.indexOf(start) is layer.name.length-start.length then true
 		
 	startingWith: (name) ->
-		matchingLayers = _.filter @all(), (layer) -> 
-			layer if layer.name.substring(0,name.length) is name
+		_.filter @all(), (layer) -> 
+			if layer.name.substring(0,name.length) is name then true
 
 	endingWith: (name) ->
-		matchingLayers = _.filter @all(), (layer) -> 
-			layer if layer.name.indexOf(name, layer.name.length - name.length) isnt -1
+		_.filter @all(), (layer) -> 
+			if layer.name.indexOf(name, layer.name.length - name.length) isnt -1 then true
 
 	withState: (state) -> 
-		matchingLayers = _.filter @all(), (layer) ->
+		_.filter @all(), (layer) ->
 			layerStates = layer.states._orderedStates
-			layer if layerStates.indexOf(state) isnt -1
+			if layerStates.indexOf(state) isnt -1 then true
 
 	withCurrentState: (state) -> 
-		matchingLayers = _.filter @all(), (layer) ->
+		_.filter @all(), (layer) ->
 			currentState = layer.states.current
-			layer if currentState.indexOf(state) isnt -1
+			if currentState.indexOf(state) isnt -1 then true
 
 	withSuperLayer: (name) ->
 		matchingLayers = []
 		for layer in @withName(name)
 			matchingLayers = matchingLayers.concat(layer.subLayers)
-		return matchingLayers.reverse()
 
 	withSubLayer: (name) ->
 		matchingLayers = []
 		for layer in @withName(name)
 			if matchingLayers.indexOf(layer.superLayer) is -1
-				matchingLayers.push(layer.superLayer) 
-		return matchingLayers.reverse()
+				matchingLayers.push(layer.superLayer)
 
 	where: (obj) ->
 		_.where Framer.CurrentContext.getLayers(), obj
