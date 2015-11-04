@@ -15,7 +15,7 @@ module.exports = {
 		end = name+delimiter
 		start = delimiter+name
 
-		_.filter @containing(name), (layer) ->
+		_.filter @all(name), (layer) ->
 			if layer.name is name then true
 			else if layer.name.indexOf(both) isnt -1 then true
 			else if layer.name.indexOf(end) is 0 then true
