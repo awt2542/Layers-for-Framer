@@ -6,7 +6,9 @@ Some methods require the .name property to be set (automatically done if you imp
 ## Installation
 
 1. Download the Layers.coffee file
-2. Drop it inside the code editor of a framer studio project
+2. Add it to the /modules folder in your project
+3. Add Layers = require 'Layers' to the top of your app.coffee file
+4. Use eg. Layers.containing(string) to return an array of all layers with names containing the string
 
 
 More info about modules in Framer and how to install them: [FramerJS Docs - Modules](http://framerjs.com/docs/#modules)
