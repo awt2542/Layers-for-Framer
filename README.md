@@ -44,9 +44,9 @@ Each method on the Layers object returns an array with layers:
 
 The following methods are also added to your layers:
 
-.findSubLayer(string) - Traverse down the tree and return first matching layer
+layer.findSubLayer(string) - Traverse down the tree and return first matching layer
 
-.findSuperLayer(string) - Traverse up the tree and return first matching layer
+layer.findSuperLayer(string) - Traverse up the tree and return first matching layer
 
 ## Examples
 
@@ -78,10 +78,6 @@ The following methods are also added to your layers:
 ### Switch to the "popup" state on layers where it has been defined
 	for layer in Layers.withState 'popup'
 		layer.states.switch 'popup'
-
-### Find layers inside a dropzone and disable draggable
-	for layer in Layers.withSuperLayer 'dropzone'
-		layer.draggable.enabled = false
 
 ### Travel up and down the layer tree 
 	for card in Layers.startingWith 'card'
