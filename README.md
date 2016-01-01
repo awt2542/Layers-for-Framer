@@ -70,7 +70,7 @@ layer.findSuperLayer(string) - Traverse up the tree and return first matching la
 		layer.on Events.Click, -> 
 			print "This feature is still work in progress"
 
-	for layer in Layers.containing 'person|animal'
+	for layer in Layers.containing 'person'
 		layer.opacity = .5
 		
 	layer.visible = false for layer in Layers.endingWith '_hide'
