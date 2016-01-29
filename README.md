@@ -1,3 +1,5 @@
+New version here: https://github.com/awt2542/Select-for-Framer
+
 # Layers for Framer.js
 
 Inspired by jQuery's selectors, this module makes it easier to find and target layers in Framer.js. Find all layers in your project, target layers that shares the same name, create custom naming schemes for default behaviors, find layers with a certain state defined and more.
