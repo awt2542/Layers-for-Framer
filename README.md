@@ -89,7 +89,3 @@ layer.findSuperLayer(string) - Traverse up the tree and return first matching la
 ### Find layers by their current values
 	layer.opacity = 0.2 for layer in Layers.where opacity: 1
 
-
-##Contact
-
-Twitter: [@andreaswah](http://twitter.com/andreaswah)
